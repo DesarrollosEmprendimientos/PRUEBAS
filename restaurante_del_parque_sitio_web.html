@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurante del Parque - Sabores que te hacen volver</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Montserrat & Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            navy: '#052d4b',       /* Azul Marino Principal */
+                            terracotta: '#ac4c00', /* Naranja / Terracota Acento */
+                            beige: '#f2edd2',      /* Beige Claro Fondo */
+                            cream: '#fefae8',      /* Crema Fondo Suave */
+                            darkNavy: '#031e33',
+                            lightTerracotta: '#c45800'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'Poppins', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'metal': '0 8px 25px -5px rgba(5, 45, 75, 0.25), 0 4px 10px -6px rgba(5, 45, 75, 0.1)',
+                        'badge': 'inset 0 2px 4px rgba(255, 255, 255, 0.3), inset 0 -2px 4px rgba(0, 0, 0, 0.4), 0 4px 10px rgba(0,0,0,0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos personalizados y utilidades de la identidad visual */
+        body {
+            background-color: #fefae8;
+            color: #052d4b;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Detalle metálico remache de insignia */
+        .rivet {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a0a0a0 0%, #4a4a4a 100%);
+            box-shadow: inset 1px 1px 1px #fff, 1px 1px 2px rgba(0,0,0,0.5);
+            display: inline-block;
+            position: relative;
+        }
+        .rivet::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 2px;
+            width: 6px;
+            height: 1.5px;
+            background-color: #2b2b2b;
+            transform: rotate(45deg);
+        }
+
+        /* Borde tipo insignia metálica */
+        .badge-border {
+            border: 4px solid #052d4b;
+            box-shadow: 0 0 0 2px #f2edd2, 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Transición de carrusel */
+        .carousel-item {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+        }
+        .carousel-item.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f2edd2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #052d4b;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ac4c00;
+        }
+    </style>
+</head>
+<body class="antialiased text-brand-navy flex flex-col min-h-screen">
+
+    <!-- 1. ENCABEZADO / MENÚ DE NAVEGACIÓN -->
+    <header class="sticky top-0 z-50 bg-brand-navy text-brand-cream shadow-xl border-b-4 border-brand-terracotta">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-24">
+                
+                <!-- Logo corporativo exacto mediante SVG Vectorial -->
+                <a href="#" class="flex items-center gap-3 group py-2">
+                    <div class="relative w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 transform group-hover:scale-105 transition duration-300 drop-shadow-md">
+                        <svg viewBox="0 0 500 500" class="w-full h-full">
+                            <!-- Anillo Exterior Azul Marino con Remaches -->
+                            <circle cx="250" cy="250" r="240" fill="#052d4b" stroke="#031e33" stroke-width="8"/>
+                            <circle cx="250" cy="250" r="215" fill="none" stroke="#f2edd2" stroke-width="4"/>
+                            
+                            <!-- Remaches / Tornillos en 0, 90, 180, 270 grados -->
+                            <!-- Top -->
+                            <circle cx="250" cy="30" r="14" fill="#052d4b" stroke="#a0a0a0" stroke-width="3"/>
+                            <line x1="240" y1="30" x2="260" y2="30" stroke="#f2edd2" stroke-width="3" transform="rotate(-30 250 30)"/>
+                            <!-- Bottom -->
+                            <circle cx="250" cy="470" r="14" fill="#052d4b" stroke="#a0a0a0" stroke-width="3"/>
+                            <line x1="240" y1="470" x2="260" y2="470" stroke="#f2edd2" stroke-width="3" transform="rotate(20 250 470)"/>
+                            <!-- Left -->
+                            <circle cx="30" cy="250" r="14" fill="#052d4b" stroke="#a0a0a0" stroke-width="3"/>
+                            <line x1="20" y1="250" x2="40" y2="250" stroke="#f2edd2" stroke-width="3" transform="rotate(45 30 250)"/>
+                            <!-- Right -->
+                            <circle cx="470" cy="250" r="14" fill="#052d4b" stroke="#a0a0a0" stroke-width="3"/>
+                            <line x1="460" y1="250" x2="480" y2="250" stroke="#f2edd2" stroke-width="3" transform="rotate(-15 470 250)"/>
+
+                            <!-- Fondo Interno Crema Marfil -->
+                            <circle cx="250" cy="250" r="195" fill="#f2edd2" stroke="#052d4b" stroke-width="6"/>
+
+                            <!-- Arc Path para Texto Superior: RESTAURANTE -->
+                            <path id="textArcTop" d="M 95,250 A 155,155 0 1,1 405,250" fill="none"/>
+                            <!-- Arc Path para Texto Inferior: DEL PARQUE -->
+                            <path id="textArcBottom" d="M 405,250 A 155,155 0 0,1 95,250" fill="none"/>
+
+                            <!-- Texto Superior Curvo -->
+                            <text fill="#052d4b" font-family="'Montserrat', sans-serif" font-weight="900" font-size="44" letter-spacing="4">
+                                <textPath href="#textArcTop" startOffset="50%" text-anchor="middle">RESTAURANTE</textPath>
+                            </text>
+
+                            <!-- Texto Inferior Curvo -->
+                            <text fill="#052d4b" font-family="'Montserrat', sans-serif" font-weight="900" font-size="42" letter-spacing="4">
+                                <textPath href="#textArcBottom" startOffset="50%" text-anchor="middle">DEL PARQUE</textPath>
+                            </text>
+
+                            <!-- Línea / Arco de Contención Central -->
+                            <circle cx="250" cy="250" r="130" fill="none" stroke="#052d4b" stroke-width="5"/>
+                            <circle cx="85" cy="250" r="8" fill="#052d4b"/>
+                            <circle cx="415" cy="250" r="8" fill="#052d4b"/>
+
+                            <!-- Fachada de Restaurante / Local (Terracota #ac4c00) -->
+                            <g transform="translate(170, 150) scale(0.65)">
+                                <!-- Techo / Toldo -->
+                                <path d="M 10,60 L 230,60 L 210,20 L 30,20 Z" fill="#ac4c00"/>
+                                <path d="M 10,60 Q 25,85 40,60 Q 55,85 70,60 Q 85,85 100,60 Q 115,85 130,60 Q 145,85 160,60 Q 175,85 190,60 Q 205,85 220,60 Q 230,85 240,60" fill="#f2edd2" stroke="#ac4c00" stroke-width="4"/>
+                                <!-- Estructura Fachada -->
+                                <rect x="25" y="65" width="190" height="110" fill="none" stroke="#ac4c00" stroke-width="8"/>
+                                <rect x="90" y="90" width="60" height="85" fill="none" stroke="#ac4c00" stroke-width="6"/>
+                                <rect x="40" y="85" width="35" height="45" fill="none" stroke="#ac4c00" stroke-width="5"/>
+                                <rect x="165" y="85" width="35" height="45" fill="none" stroke="#ac4c00" stroke-width="5"/>
+                            </g>
+
+                            <!-- Cubiertos Cruzados (Tenedor y Cuchillo Terracota #ac4c00) -->
+                            <g transform="translate(135, 220) scale(0.9)">
+                                <!-- Tenedor (Izquierda a Derecha) -->
+                                <g transform="rotate(35 125 125)">
+                                    <path d="M 115,20 L 115,80 Q 115,110 125,120 L 125,230 Q 125,240 120,240 Q 115,240 115,230 L 115,120 Q 105,110 105,80 L 105,20 Z" fill="#ac4c00"/>
+                                    <!-- Dientes Tenedor -->
+                                    <rect x="105" y="20" width="4" height="45" fill="#f2edd2"/>
+                                    <rect x="113" y="20" width="4" height="35" fill="#f2edd2"/>
+                                    <rect x="121" y="20" width="4" height="45" fill="#f2edd2"/>
+                                </g>
+
+                                <!-- Cuchillo (Derecha a Izquierda) -->
+                                <g transform="rotate(-35 125 125)">
+                                    <path d="M 130,15 Q 155,60 145,110 L 135,120 L 135,230 Q 135,240 128,240 Q 120,240 120,230 L 120,110 L 130,15 Z" fill="#ac4c00"/>
+                                </g>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <span class="font-extrabold text-lg sm:text-2xl tracking-wider text-brand-beige uppercase leading-tight">
+                            RESTAURANTE
+                        </span>
+                        <span class="font-bold text-sm sm:text-base text-brand-terracotta tracking-widest uppercase -mt-1">
+                            DEL PARQUE
+                        </span>
+                        <span class="text-[10px] text-gray-300 hidden sm:block italic tracking-wide">
+                            Parque Industrial Quilmes
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Navegación Escritorio -->
+                <nav class="hidden md:flex space-x-6 items-center text-sm font-semibold tracking-wide uppercase">
+                    <a href="#inicio" class="hover:text-brand-terracotta transition duration-200">Inicio</a>
+                    <a href="#viandas-empresas" class="hover:text-brand-terracotta transition duration-200">Viandas Empresas</a>
+                    <a href="#eventos" class="hover:text-brand-terracotta transition duration-200">Eventos</a>
+                    <a href="#donde-estamos" class="hover:text-brand-terracotta transition duration-200">Dónde Estamos</a>
+                    <a href="#contacto" class="hover:text-brand-terracotta transition duration-200">Contacto</a>
+                </nav>
+
+                <!-- Botón CTA Descargar App / Pedir -->
+                <div class="hidden lg:flex items-center space-x-3">
+                    <button onclick="openModal('app-modal')" class="bg-brand-terracotta hover:bg-brand-lightTerracotta text-white px-5 py-2.5 rounded-full font-bold text-sm uppercase tracking-wider shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-0.5 flex items-center gap-2 border border-amber-500">
+                        <i class="fa-solid fa-mobile-screen-button text-lg"></i>
+                        Descargar App
+                    </button>
+                    <button onclick="openModal('platform-modal')" class="bg-brand-beige hover:bg-white text-brand-navy px-4 py-2.5 rounded-full font-bold text-xs uppercase tracking-wider shadow transition duration-300 border border-brand-navy flex items-center gap-2">
+                        <i class="fa-solid fa-building"></i> Portal Empresas
+                    </button>
+                </div>
+
+                <!-- Botón Menú Mobile -->
+                <div class="flex md:hidden items-center gap-2">
+                    <button onclick="openModal('app-modal')" class="bg-brand-terracotta text-white p-2 rounded-full text-xs">
+                        <i class="fa-solid fa-mobile-screen-button text-base"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="text-brand-beige hover:text-white p-2 text-2xl focus:outline-none">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Menú Desplegable Móvil -->
+            <div id="mobile-menu" class="hidden md:hidden pb-6 border-t border-slate-700 pt-4 bg-brand-navy">
+                <div class="flex flex-col space-y-3 px-2 font-medium">
+                    <a href="#inicio" class="mobile-link text-brand-cream hover:text-brand-terracotta py-1">Inicio</a>
+                    <a href="#viandas-empresas" class="mobile-link text-brand-cream hover:text-brand-terracotta py-1">Viandas Empresas</a>
+                    <a href="#eventos" class="mobile-link text-brand-cream hover:text-brand-terracotta py-1">Eventos y Catering</a>
+                    <a href="#donde-estamos" class="mobile-link text-brand-cream hover:text-brand-terracotta py-1">Dónde Estamos</a>
+                    <a href="#contacto" class="mobile-link text-brand-cream hover:text-brand-terracotta py-1">Contacto</a>
+                    <div class="pt-2 flex flex-col gap-2">
+                        <button onclick="openModal('app-modal')" class="w-full bg-brand-terracotta text-white py-2.5 rounded-lg font-bold text-center uppercase text-xs">
+                            <i class="fa-solid fa-download mr-2"></i> Descargar App Pedidos
+                        </button>
+                        <button onclick="openModal('platform-modal')" class="w-full bg-brand-beige text-brand-navy py-2.5 rounded-lg font-bold text-center uppercase text-xs">
+                            <i class="fa-solid fa-laptop-code mr-2"></i> Acceso Plataforma Empresas
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- 2. CARROUSEL / HERO BANNER ROTATIVO (Respetando el modelo) -->
+    <section id="inicio" class="relative bg-brand-navy overflow-hidden">
+        <!-- Carrusel Container -->
+        <div class="relative min-h-[480px] sm:min-h-[520px] flex items-center">
+            
+            <!-- Slide 1: Viandas para Empresas -->
+            <div class="carousel-item active w-full flex-col justify-center items-center text-center px-4 py-12 sm:py-16 bg-gradient-to-br from-brand-navy via-brand-darkNavy to-slate-900">
+                <!-- Logo Oficial Integrado en Hero -->
+                <div class="w-24 h-24 mb-4 drop-shadow-xl">
+                    <svg viewBox="0 0 500 500" class="w-full h-full">
+                        <circle cx="250" cy="250" r="240" fill="#052d4b" stroke="#031e33" stroke-width="8"/>
+                        <circle cx="250" cy="250" r="215" fill="none" stroke="#f2edd2" stroke-width="4"/>
+                        <circle cx="250" cy="30" r="14" fill="#052d4b" stroke="#a0a0a0" stroke-width="3"/>
+                        <circle cx="250" cy="470" r="14" fill="#052d4b" stroke="#a0a0a0" stroke-width="3"/>
+                        <circle cx="30" cy="250" r="14" fill="#052d4b" stroke="#a0a0a0" stroke-width="3"/>
+                        <circle cx="470" cy="250" r="14" fill="#052d4b" stroke="#a0a0a0" stroke-width="3"/>
+                        <circle cx="250" cy="250" r="195" fill="#f2edd2" stroke="#052d4b" stroke-width="6"/>
+                        <path id="textArcTopHero" d="M 95,250 A 155,155 0 1,1 405,250" fill="none"/>
+                        <path id="textArcBottomHero" d="M 405,250 A 155,155 0 0,1 95,250" fill="none"/>
+                        <text fill="#052d4b" font-family="'Montserrat', sans-serif" font-weight="900" font-size="44" letter-spacing="4">
+                            <textPath href="#textArcTopHero" startOffset="50%" text-anchor="middle">RESTAURANTE</textPath>
+                        </text>
+                        <text fill="#052d4b" font-family="'Montserrat', sans-serif" font-weight="900" font-size="42" letter-spacing="4">
+                            <textPath href="#textArcBottomHero" startOffset="50%" text-anchor="middle">DEL PARQUE</textPath>
+                        </text>
+                        <circle cx="250" cy="250" r="130" fill="none" stroke="#052d4b" stroke-width="5"/>
+                        <g transform="translate(170, 150) scale(0.65)">
+                            <path d="M 10,60 L 230,60 L 210,20 L 30,20 Z" fill="#ac4c00"/>
+                            <path d="M 10,60 Q 25,85 40,60 Q 55,85 70,60 Q 85,85 100,60 Q 115,85 130,60 Q 145,85 160,60 Q 175,85 190,60 Q 205,85 220,60 Q 230,85 240,60" fill="#f2edd2" stroke="#ac4c00" stroke-width="4"/>
+                            <rect x="25" y="65" width="190" height="110" fill="none" stroke="#ac4c00" stroke-width="8"/>
+                        </g>
+                        <g transform="translate(135, 220) scale(0.9)">
+                            <g transform="rotate(35 125 125)">
+                                <path d="M 115,20 L 115,80 Q 115,110 125,120 L 125,230 Q 125,240 120,240 Q 115,240 115,230 L 115,120 Q 105,110 105,80 L 105,20 Z" fill="#ac4c00"/>
+                            </g>
+                            <g transform="rotate(-35 125 125)">
+                                <path d="M 130,15 Q 155,60 145,110 L 135,120 L 135,230 Q 135,240 128,240 Q 120,240 120,230 L 120,110 L 130,15 Z" fill="#ac4c00"/>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+                <span class="inline-block px-4 py-1.5 rounded-full bg-brand-terracotta/20 border border-brand-terracotta text-brand-terracotta font-bold text-xs uppercase tracking-widest mb-4">
+                    Parque Industrial Quilmes
+                </span>
+                <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-brand-cream max-w-4xl uppercase tracking-tight mb-4 leading-tight">
+                    Servicio de Viandas Corporativas
+                </h1>
+                <p class="text-brand-beige text-base sm:text-xl max-w-2xl font-light mb-8 leading-relaxed">
+                    Menúes nutritivos, caseros y puntuales diseñados para el personal de las empresas. Gestión 100% digitalizada por plataforma.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#viandas-empresas" class="bg-brand-terracotta hover:bg-brand-lightTerracotta text-white px-8 py-3.5 rounded-full font-bold uppercase tracking-wider text-sm shadow-xl transition transform hover:scale-105">
+                        Ver Planes de Viandas
+                    </a>
+                    <button onclick="openModal('platform-modal')" class="bg-transparent border-2 border-brand-beige text-brand-beige hover:bg-brand-beige hover:text-brand-navy px-8 py-3.5 rounded-full font-bold uppercase tracking-wider text-sm transition">
+                        Demo Plataforma
+                    </button>
+                </div>
+            </div>
+
+            <!-- Slide 2: Eventos y Reuniones -->
+            <div class="carousel-item w-full flex-col justify-center items-center text-center px-4 py-12 sm:py-16 bg-gradient-to-br from-slate-900 via-brand-navy to-amber-950">
+                <span class="inline-block px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-500 text-amber-400 font-bold text-xs uppercase tracking-widest mb-4">
+                    Catering a Medida
+                </span>
+                <h2 class="text-3xl sm:text-5xl md:text-6xl font-black text-brand-cream max-w-4xl uppercase tracking-tight mb-4 leading-tight">
+                    Hacé tu Evento o Reunión en el Salón
+                </h2>
+                <p class="text-brand-beige text-base sm:text-xl max-w-2xl font-light mb-8 leading-relaxed">
+                    Servicio de banquete, reuniones de directivos y celebraciones corporativas con la mejor propuesta gastronómica casera.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#eventos" class="bg-brand-terracotta hover:bg-brand-lightTerracotta text-white px-8 py-3.5 rounded-full font-bold uppercase tracking-wider text-sm shadow-xl transition transform hover:scale-105">
+                        Cotizar Evento
+                    </a>
+                    <a href="https://wa.me/541173568101" target="_blank" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3.5 rounded-full font-bold uppercase tracking-wider text-sm shadow-lg transition flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Consultar Fecha
+                    </a>
+                </div>
+            </div>
+
+            <!-- Slide 3: Salón, Mostrador y Delivery -->
+            <div class="carousel-item w-full flex-col justify-center items-center text-center px-4 py-12 sm:py-16 bg-gradient-to-br from-brand-navy via-slate-900 to-brand-darkNavy">
+                <span class="inline-block px-4 py-1.5 rounded-full bg-brand-beige/20 border border-brand-beige text-brand-beige font-bold text-xs uppercase tracking-widest mb-4">
+                    Atención Diario
+                </span>
+                <h2 class="text-3xl sm:text-5xl md:text-6xl font-black text-brand-cream max-w-4xl uppercase tracking-tight mb-4 leading-tight">
+                    ¡Conocenos! Vení al salón o pedí por delivery
+                </h2>
+                <p class="text-brand-beige text-base sm:text-xl max-w-2xl font-light mb-8 leading-relaxed">
+                    Almuerzos express, platos del día, minutas y la mejor calidad en el corazón del Parque Industrial Quilmes.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button onclick="openModal('app-modal')" class="bg-brand-terracotta hover:bg-brand-lightTerracotta text-white px-8 py-3.5 rounded-full font-bold uppercase tracking-wider text-sm shadow-xl transition transform hover:scale-105 flex items-center gap-2">
+                        <i class="fa-solid fa-mobile-screen"></i> Pedir por la App
+                    </button>
+                    <a href="#donde-estamos" class="bg-brand-beige text-brand-navy hover:bg-white px-8 py-3.5 rounded-full font-bold uppercase tracking-wider text-sm shadow transition">
+                        Ver Horarios y Ubicación
+                    </a>
+                </div>
+            </div>
+
+            <!-- Botones Carrusel Prev/Next -->
+            <button id="prevSlide" class="absolute left-3 top-1/2 -translate-y-1/2 bg-brand-navy/60 hover:bg-brand-terracotta text-white w-12 h-12 rounded-full flex items-center justify-center border border-white/20 transition">
+                <i class="fa-solid fa-chevron-left text-xl"></i>
+            </button>
+            <button id="nextSlide" class="absolute right-3 top-1/2 -translate-y-1/2 bg-brand-navy/60 hover:bg-brand-terracotta text-white w-12 h-12 rounded-full flex items-center justify-center border border-white/20 transition">
+                <i class="fa-solid fa-chevron-right text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Indicadores de slide -->
+        <div class="flex justify-center gap-3 py-4 bg-brand-darkNavy">
+            <button class="carousel-dot w-8 h-2.5 rounded-full bg-brand-terracotta transition-all" data-index="0"></button>
+            <button class="carousel-dot w-3 h-2.5 rounded-full bg-slate-600 transition-all" data-index="1"></button>
+            <button class="carousel-dot w-3 h-2.5 rounded-full bg-slate-600 transition-all" data-index="2"></button>
+        </div>
+    </section>
+
+    <!-- Franja de Valores Visuales -->
+    <div class="bg-brand-beige border-y-2 border-brand-navy py-4 text-center">
+        <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-around items-center gap-4 text-brand-navy font-bold text-xs sm:text-sm uppercase tracking-widest">
+            <span class="flex items-center gap-2"><i class="fa-solid fa-utensils text-brand-terracotta"></i> Identidad</span>
+            <span class="hidden sm:inline">•</span>
+            <span class="flex items-center gap-2"><i class="fa-solid fa-award text-brand-terracotta"></i> Calidad Superior</span>
+            <span class="hidden sm:inline">•</span>
+            <span class="flex items-center gap-2"><i class="fa-solid fa-fire text-brand-terracotta"></i> Tradición Casera</span>
+            <span class="hidden sm:inline">•</span>
+            <span class="flex items-center gap-2"><i class="fa-solid fa-clock text-brand-terracotta"></i> Puntualidad en Planta</span>
+        </div>
+    </div>
+
+
+    <!-- 3. SECCIÓN 1: SERVICIO DE VIANDAS PARA EMPRESAS (3 TARJETAS + BOTÓN CONTACTO) -->
+    <section id="viandas-empresas" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+            <div class="inline-flex items-center gap-2 px-3 py-1 bg-brand-beige rounded-full border border-brand-navy text-xs font-bold uppercase text-brand-navy mb-3">
+                <span class="rivet scale-75"></span> Solución Corporativa <span class="rivet scale-75"></span>
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-navy uppercase tracking-tight">
+                Servicio de Viandas para Empresas
+            </h2>
+            <p class="text-gray-700 max-w-2xl mx-auto mt-2 text-sm sm:text-base">
+                Diseñado exclusivamente para optimizar la alimentación del personal en las plantas del Parque Industrial Quilmes. Tres modalidades adaptables a su presupuesto.
+            </p>
+        </div>
+
+        <!-- Grid de 3 tarjetas como en la estructura enviada -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Plan 1 -->
+            <div class="bg-brand-cream rounded-2xl border-2 border-brand-navy shadow-metal flex flex-col justify-between overflow-hidden group hover:border-brand-terracotta transition duration-300">
+                <div class="p-6">
+                    <div class="w-14 h-14 rounded-full bg-brand-navy text-brand-beige flex items-center justify-center text-2xl font-bold mb-4 shadow">
+                        <i class="fa-solid fa-building-circle-check"></i>
+                    </div>
+                    <span class="text-xs font-bold text-brand-terracotta uppercase tracking-wider block mb-1">Modalidad A</span>
+                    <h3 class="text-xl font-extrabold text-brand-navy uppercase mb-3">Plan 1: Viandas con Subsidio Empresa</h3>
+                    <p class="text-gray-600 text-sm mb-6 leading-relaxed">
+                        La empresa financia total o parcialmente las viandas. Gestión automatizada por la plataforma donde cada empleado elige su plato diario dentro del presupuesto asignado.
+                    </p>
+                    <ul class="text-xs text-slate-700 space-y-2 mb-6">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-green-600"></i> Facturación corporativa consolidada</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-green-600"></i> Reporte mensual de consumos</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-green-600"></i> Entrega agrupada en planta</li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-brand-beige border-t border-brand-navy">
+                    <button onclick="openContactModal('Viandas: Plan 1 (Subsidio Empresa)')" class="w-full bg-brand-navy hover:bg-brand-terracotta text-brand-cream font-bold py-3 px-4 rounded-xl text-xs uppercase tracking-wider shadow transition duration-300 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-envelope"></i> Solicitá Cotización
+                    </button>
+                </div>
+            </div>
+
+            <!-- Plan 2 -->
+            <div class="bg-brand-cream rounded-2xl border-2 border-brand-terracotta shadow-metal flex flex-col justify-between overflow-hidden relative transform md:-translate-y-2 transition duration-300">
+                <div class="absolute top-0 right-0 bg-brand-terracotta text-white text-[10px] uppercase font-bold px-3 py-1 rounded-bl-lg">
+                    Más Elegido
+                </div>
+                <div class="p-6">
+                    <div class="w-14 h-14 rounded-full bg-brand-terracotta text-white flex items-center justify-center text-2xl font-bold mb-4 shadow">
+                        <i class="fa-solid fa-mobile-retro"></i>
+                    </div>
+                    <span class="text-xs font-bold text-brand-terracotta uppercase tracking-wider block mb-1">Modalidad B</span>
+                    <h3 class="text-xl font-extrabold text-brand-navy uppercase mb-3">Plan 2: Pedido Individual vía App</h3>
+                    <p class="text-gray-600 text-sm mb-6 leading-relaxed">
+                        Los empleados solicitan y pagan su menú de forma individual a través de la App con un descuento corporativo pre-acordado por convenio con la empresa.
+                    </p>
+                    <ul class="text-xs text-slate-700 space-y-2 mb-6">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-green-600"></i> Sin costo administrativo para la firma</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-green-600"></i> Variedad de opciones calóricas y saludables</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-green-600"></i> Pedido anticipado previo a las 10:30 hs</li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-brand-beige border-t border-brand-navy">
+                    <button onclick="openContactModal('Viandas: Plan 2 (App Directo Empleado)')" class="w-full bg-brand-terracotta hover:bg-brand-lightTerracotta text-white font-bold py-3 px-4 rounded-xl text-xs uppercase tracking-wider shadow transition duration-300 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-envelope"></i> Activar Convenio
+                    </button>
+                </div>
+            </div>
+
+            <!-- Plan 3 -->
+            <div class="bg-brand-cream rounded-2xl border-2 border-brand-navy shadow-metal flex flex-col justify-between overflow-hidden group hover:border-brand-terracotta transition duration-300">
+                <div class="p-6">
+                    <div class="w-14 h-14 rounded-full bg-brand-navy text-brand-beige flex items-center justify-center text-2xl font-bold mb-4 shadow">
+                        <i class="fa-solid fa-box-archive"></i>
+                    </div>
+                    <span class="text-xs font-bold text-brand-terracotta uppercase tracking-wider block mb-1">Modalidad C</span>
+                    <h3 class="text-xl font-extrabold text-brand-navy uppercase mb-3">Plan 3: Menú Fijo Tradicional</h3>
+                    <p class="text-gray-600 text-sm mb-6 leading-relaxed">
+                        Servicio programado con rotación semanal de menúes clásicos caseros (principal, guarnición y fruta) entregados térmicamente en la planta a hora fija.
+                    </p>
+                    <ul class="text-xs text-slate-700 space-y-2 mb-6">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-green-600"></i> Ideal para turnos rotativos y comedores</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-green-600"></i> Envases descartables aptos microondas</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-green-600"></i> Máxima practicidad operativa</li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-brand-beige border-t border-brand-navy">
+                    <button onclick="openContactModal('Viandas: Plan 3 (Menú Fijo Tradicional)')" class="w-full bg-brand-navy hover:bg-brand-terracotta text-brand-cream font-bold py-3 px-4 rounded-xl text-xs uppercase tracking-wider shadow transition duration-300 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-envelope"></i> Solicitar Menú Semanal
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- MÓDULO DESTACADO: PLATAFORMA DE GESTIÓN CORPORATIVA -->
+    <section class="bg-brand-navy text-brand-cream py-12 px-4 sm:px-6 lg:px-8 border-y-4 border-brand-terracotta my-6">
+            <div class="lg:col-span-5 bg-brand-beige text-brand-navy p-6 rounded-2xl shadow-xl border-2 border-white text-center flex flex-col items-center">
+                <!-- Logo en la tarjeta de la plataforma -->
+                <div class="w-20 h-20 mb-3 drop-shadow">
+                    <svg viewBox="0 0 500 500" class="w-full h-full">
+                        <circle cx="250" cy="250" r="240" fill="#052d4b" stroke="#031e33" stroke-width="8"/>
+                        <circle cx="250" cy="250" r="215" fill="none" stroke="#f2edd2" stroke-width="4"/>
+                        <circle cx="250" cy="250" r="195" fill="#f2edd2" stroke="#052d4b" stroke-width="6"/>
+                        <path id="textArcTopPlat" d="M 95,250 A 155,155 0 1,1 405,250" fill="none"/>
+                        <path id="textArcBottomPlat" d="M 405,250 A 155,155 0 0,1 95,250" fill="none"/>
+                        <text fill="#052d4b" font-family="'Montserrat', sans-serif" font-weight="900" font-size="44" letter-spacing="4">
+                            <textPath href="#textArcTopPlat" startOffset="50%" text-anchor="middle">RESTAURANTE</textPath>
+                        </text>
+                        <text fill="#052d4b" font-family="'Montserrat', sans-serif" font-weight="900" font-size="42" letter-spacing="4">
+                            <textPath href="#textArcBottomPlat" startOffset="50%" text-anchor="middle">DEL PARQUE</textPath>
+                        </text>
+                        <circle cx="250" cy="250" r="130" fill="none" stroke="#052d4b" stroke-width="5"/>
+                        <g transform="translate(170, 150) scale(0.65)">
+                            <path d="M 10,60 L 230,60 L 210,20 L 30,20 Z" fill="#ac4c00"/>
+                        </g>
+                        <g transform="translate(135, 220) scale(0.9)">
+                            <g transform="rotate(35 125 125)"><path d="M 115,20 L 115,80 Q 115,110 125,120 L 125,230 Z" fill="#ac4c00"/></g>
+                            <g transform="rotate(-35 125 125)"><path d="M 130,15 Q 155,60 145,110 L 135,120 L 135,230 Z" fill="#ac4c00"/></g>
+                        </g>
+                    </svg>
+                </div>
+                <h4 class="font-bold text-lg uppercase mb-2">¿Perteneces a RRHH o Compras?</h4>
+                <p class="text-xs text-gray-700 mb-6">Solicitá una demostración de la plataforma para alta de empresa y prueba gratuita de servicio.</p>
+                <button onclick="openModal('platform-modal')" class="w-full bg-brand-terracotta hover:bg-brand-lightTerracotta text-white font-extrabold py-3 rounded-xl uppercase text-xs tracking-wider transition shadow-lg">
+                    Ingresar / Dar de Alta Empresa
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 4. SECCIÓN 2: EVENTOS Y CATERING EN EL SALÓN (2 TARJETAS + BOTÓN CONTACTO) -->
+    <section id="eventos" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-brand-beige/50 rounded-3xl my-8 border border-brand-beige">
+        <div class="text-center mb-12">
+            <span class="text-brand-terracotta font-bold text-xs uppercase tracking-widest block mb-1">
+                Celebraciones y Trabajo
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-navy uppercase tracking-tight">
+                Eventos en Salón & Catering a Medida
+            </h2>
+            <p class="text-gray-700 max-w-2xl mx-auto mt-2 text-sm sm:text-base">
+                Contamos con instalaciones equipadas en el restaurante para llevar a cabo tus encuentros institucionales o festejos privados.
+            </p>
+        </div>
+
+        <!-- Grid de 2 tarjetas como en la maqueta recibida -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            
+            <!-- Opción Evento 1 -->
+            <div class="bg-brand-cream rounded-2xl border-2 border-brand-navy shadow-metal overflow-hidden flex flex-col justify-between">
+                <div class="p-6 sm:p-8">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-brand-navy text-brand-beige flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-brand-terracotta uppercase">Opción Evento 1</span>
+                            <h3 class="text-xl font-extrabold text-brand-navy uppercase">Eventos Corporativos</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-6 leading-relaxed">
+                        Reuniones de directorio, capacitaciones, almuerzos de trabajo y cierres de año. Disponemos de ambiente reservado, proyector, conectividad y propuestas gastronómicas de finger food o almuerzo ejecutivo completo.
+                    </p>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 text-xs space-y-2">
+                        <div class="font-bold text-brand-navy"><i class="fa-solid fa-check text-brand-terracotta mr-1"></i> Incluye:</div>
+                        <p class="text-gray-600">Coordinación integral, servicio de mozos, menú personalizado de 2 o 3 pasos, café de cortesía.</p>
+                    </div>
+                </div>
+                <div class="p-4 bg-brand-beige border-t border-brand-navy">
+                    <button onclick="openContactModal('Evento Corporativo / Reunión')" class="w-full bg-brand-terracotta hover:bg-brand-lightTerracotta text-white font-bold py-3 px-4 rounded-xl text-xs uppercase tracking-wider shadow transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-calendar-check"></i> Cotizar Evento Corporativo
+                    </button>
+                </div>
+            </div>
+
+            <!-- Opción Evento 2 -->
+            <div class="bg-brand-cream rounded-2xl border-2 border-brand-navy shadow-metal overflow-hidden flex flex-col justify-between">
+                <div class="p-6 sm:p-8">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-brand-navy text-brand-beige flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-champagne-glasses"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-brand-terracotta uppercase">Opción Evento 2</span>
+                            <h3 class="text-xl font-extrabold text-brand-navy uppercase">Eventos Sociales & Banquetes</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-6 leading-relaxed">
+                        Celebraciones familiares, cumpleaños, agasajos y banquetes especiales. Reservá el salón de manera exclusiva con alternativas de parrillada, pastas caseras, recepción de fiambres e islas gastronómicas.
+                    </p>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 text-xs space-y-2">
+                        <div class="font-bold text-brand-navy"><i class="fa-solid fa-check text-brand-terracotta mr-1"></i> Incluye:</div>
+                        <p class="text-gray-600">Ambientación, menú a elección, mesa dulce, servicio de barra y atención personalizada.</p>
+                    </div>
+                </div>
+                <div class="p-4 bg-brand-beige border-t border-brand-navy">
+                    <button onclick="openContactModal('Evento Social / Festejo')" class="w-full bg-brand-navy hover:bg-brand-terracotta text-brand-cream font-bold py-3 px-4 rounded-xl text-xs uppercase tracking-wider shadow transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-calendar-check"></i> Cotizar Festejo Social
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- 5. SECCIÓN 3: DÓNDE ESTAMOS Y CONTACTO (2 COLUMNAS GRANDES) -->
+    <section id="donde-estamos" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- TARJETA 1: DÓNDE ESTAMOS -->
+            <div id="ubicacion" class="bg-brand-cream rounded-3xl border-4 border-brand-navy p-6 sm:p-8 shadow-metal flex flex-col justify-between relative overflow-hidden">
+                <span class="rivet absolute top-3 left-3"></span>
+                <span class="rivet absolute top-3 right-3"></span>
+                
+                <div>
+                    <div class="flex items-center gap-3 mb-6 border-b-2 border-brand-terracotta pb-4">
+                        <i class="fa-solid fa-location-dot text-3xl text-brand-terracotta"></i>
+                        <div>
+                            <h3 class="text-2xl font-black text-brand-navy uppercase">Dónde Estamos</h3>
+                            <p class="text-xs text-gray-600 font-bold">Ubicación estratégica en Quilmes</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 text-sm text-gray-700 mb-6">
+                        <p class="flex items-start gap-3">
+                            <i class="fa-solid fa-map-pin text-brand-terracotta mt-1"></i>
+                            <span><strong>Dirección:</strong> Parque Industrial Quilmes (Camino General Belgrano Km 10.5, Quilmes West, Buenos Aires).</span>
+                        </p>
+                        <p class="flex items-start gap-3">
+                            <i class="fa-solid fa-clock text-brand-terracotta mt-1"></i>
+                            <span><strong>Horarios de Atención:</strong><br>Lunes a Viernes de 8:00 a 15:30 hs.<br><span class="text-xs text-red-600 font-semibold">(Sábados, Domingos y Feriados cerrado)</span></span>
+                        </p>
+                        <p class="flex items-start gap-3">
+                            <i class="fa-solid fa-credit-card text-brand-terracotta mt-1"></i>
+                            <span><strong>Medios de Pago:</strong> Efectivo, Transferencia Bancaria, Mercadopago y Cuenta Corriente Empresa.</span>
+                        </p>
+                    </div>
+
+                    <!-- Representación Gráfica del Mapa Interactiva -->
+                    <div class="w-full h-48 bg-slate-200 rounded-2xl border-2 border-brand-navy overflow-hidden relative flex items-center justify-center group shadow-inner">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-80" style="background-image: url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=600&q=80');"></div>
+                        <div class="absolute inset-0 bg-brand-navy/30"></div>
+                        <div class="relative z-10 text-center p-4">
+                            <div class="bg-brand-navy text-brand-beige px-4 py-2 rounded-xl border border-brand-terracotta shadow-lg inline-flex items-center gap-2">
+                                <div class="w-6 h-6 inline-block">
+                                    <svg viewBox="0 0 500 500" class="w-full h-full">
+                                        <circle cx="250" cy="250" r="240" fill="#052d4b"/>
+                                        <circle cx="250" cy="250" r="195" fill="#f2edd2"/>
+                                        <g transform="translate(135, 220) scale(0.9)">
+                                            <g transform="rotate(35 125 125)"><path d="M 115,20 L 115,230 Z" stroke="#ac4c00" stroke-width="20"/></g>
+                                            <g transform="rotate(-35 125 125)"><path d="M 130,15 L 135,230 Z" stroke="#ac4c00" stroke-width="20"/></g>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <span class="font-extrabold text-xs uppercase">Restaurante del Parque</span>
+                            </div>
+                            <a href="https://maps.google.com" target="_blank" class="block mt-2 text-xs text-white underline font-bold hover:text-brand-terracotta">
+                                Ampliar en Google Maps &rarr;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-slate-300 flex justify-between items-center text-xs font-bold text-brand-navy">
+                    <span><i class="fa-solid fa-parking text-brand-terracotta mr-1"></i> Estacionamiento propio</span>
+                    <span><i class="fa-solid fa-wifi text-brand-terracotta mr-1"></i> WiFi Gratis</span>
+                </div>
+            </div>
+
+            <!-- TARJETA 2: CONTACTO -->
+            <div id="contacto" class="bg-brand-cream rounded-3xl border-4 border-brand-navy p-6 sm:p-8 shadow-metal flex flex-col justify-between relative overflow-hidden">
+                <span class="rivet absolute top-3 left-3"></span>
+                <span class="rivet absolute top-3 right-3"></span>
+
+                <div>
+                    <div class="flex items-center gap-3 mb-6 border-b-2 border-brand-terracotta pb-4">
+                        <i class="fa-solid fa-paper-plane text-3xl text-brand-terracotta"></i>
+                        <div>
+                            <h3 class="text-2xl font-black text-brand-navy uppercase">Contacto Directo</h3>
+                            <p class="text-xs text-gray-600 font-bold">Escribinos y te respondemos en el acto</p>
+                        </div>
+                    </div>
+
+                    <!-- Formulario de Contacto -->
+                    <form id="contactForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-extrabold text-brand-navy uppercase mb-1">Nombre y Apellido / Empresa</label>
+                            <input type="text" required placeholder="Ej: Maria Gonzalez - Metalúrgica Quilmes" class="w-full px-4 py-2.5 rounded-xl border-2 border-brand-navy bg-white text-sm focus:outline-none focus:border-brand-terracotta">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-extrabold text-brand-navy uppercase mb-1">Teléfono / WhatsApp</label>
+                                <input type="tel" required placeholder="Ej: 11 1234-5678" class="w-full px-4 py-2.5 rounded-xl border-2 border-brand-navy bg-white text-sm focus:outline-none focus:border-brand-terracotta">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-extrabold text-brand-navy uppercase mb-1">Motivo</label>
+                                <select id="formSubject" class="w-full px-4 py-2.5 rounded-xl border-2 border-brand-navy bg-white text-sm focus:outline-none focus:border-brand-terracotta">
+                                    <option>Viandas para Empresas</option>
+                                    <option>Reserva / Evento en Salón</option>
+                                    <option>Pedido Mostrador / Delivery</option>
+                                    <option>Consulta General</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-extrabold text-brand-navy uppercase mb-1">Mensaje o Consulta</label>
+                            <textarea rows="3" required placeholder="Escribinos los detalles de tu consulta o requerimiento..." class="w-full px-4 py-2.5 rounded-xl border-2 border-brand-navy bg-white text-sm focus:outline-none focus:border-brand-terracotta"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-brand-terracotta hover:bg-brand-lightTerracotta text-white font-extrabold py-3.5 rounded-xl text-xs uppercase tracking-wider shadow-lg transition duration-300">
+                            Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Redes y Contacto Rápido -->
+                <div class="mt-6 pt-4 border-t border-slate-300 flex flex-wrap justify-between items-center text-xs gap-3">
+                    <a href="https://wa.me/541173568101" target="_blank" class="font-bold text-green-700 hover:underline flex items-center gap-1">
+                        <i class="fa-brands fa-whatsapp text-base"></i> 11 7356-8101
+                    </a>
+                    <a href="https://instagram.com" target="_blank" class="font-bold text-pink-700 hover:underline flex items-center gap-1">
+                        <i class="fa-brands fa-instagram text-base"></i> @restaurante.del.parque
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- FOOTER CORPORATIVO -->
+    <footer class="bg-brand-navy text-brand-cream border-t-8 border-brand-terracotta mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center md:text-left">
+                
+                <!-- Col 1: Brand Info -->
+                <div class="space-y-2">
+                    <div class="font-black text-xl text-brand-beige tracking-wider">RESTAURANTE DEL PARQUE</div>
+                    <p class="text-xs text-slate-300">Parque Industrial Quilmes • Buenos Aires</p>
+                    <p class="text-xs text-brand-terracotta font-semibold italic">"Sabores que te hacen volver"</p>
+                </div>
+
+                <!-- Col 2: Accesos Rápidos -->
+                <div class="flex justify-center gap-6 text-xs font-bold uppercase tracking-wider">
+                    <a href="#inicio" class="hover:text-brand-terracotta">Inicio</a>
+                    <a href="#viandas-empresas" class="hover:text-brand-terracotta">Viandas</a>
+                    <a href="#eventos" class="hover:text-brand-terracotta">Eventos</a>
+                    <a href="#donde-estamos" class="hover:text-brand-terracotta">Ubicación</a>
+                </div>
+
+                <!-- Col 3: Descarga App -->
+                <div class="flex flex-col items-center md:items-end gap-2">
+                    <span class="text-xs font-semibold text-brand-beige">¿Pedidos desde tu cel?</span>
+                    <button onclick="openModal('app-modal')" class="bg-brand-terracotta hover:bg-brand-lightTerracotta text-white text-xs uppercase font-extrabold px-5 py-2.5 rounded-full shadow border border-amber-500 transition">
+                        <i class="fa-solid fa-mobile-screen mr-1"></i> Descargar Nuestra App
+                    </button>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 mt-8 pt-6 text-center text-[11px] text-slate-400">
+                © 2026 Restaurante del Parque. Todos los derechos reservados. Parque Industrial Quilmes.
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- BOTÓN FLOTANTE DE WHATSAPP (Como en el esquema enviado) -->
+    <a href="https://wa.me/541173568101?text=Hola!%20Quisiera%20hacer%20una%20consulta%20para%20el%20Restaurante%20del%20Parque" 
+       target="_blank" 
+       aria-label="Contacto por WhatsApp"
+       class="fixed bottom-6 right-6 z-50 bg-green-600 hover:bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl border-4 border-white transition-all transform hover:scale-110 group">
+        <i class="fa-brands fa-whatsapp text-3xl"></i>
+        <!-- Tooltip flotante -->
+        <span class="absolute right-20 bg-brand-navy text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 transition duration-300 whitespace-nowrap pointer-events-none">
+            ¡Escribinos por WhatsApp!
+        </span>
+    </a>
+
+
+    <!-- MODAL 1: DESCARGA DE APP MÓVIL -->
+    <div id="app-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-brand-cream border-4 border-brand-navy rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="closeModal('app-modal')" class="absolute top-4 right-4 text-brand-navy hover:text-brand-terracotta text-2xl font-bold">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center">
+                <div class="w-16 h-16 bg-brand-navy text-brand-beige rounded-2xl mx-auto flex items-center justify-center text-3xl mb-4 border-2 border-brand-terracotta shadow">
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                </div>
+                <h3 class="text-2xl font-black text-brand-navy uppercase mb-1">App Restaurante del Parque</h3>
+                <p class="text-xs text-gray-600 mb-6">Pedí tu comida para salón, retiro o delivery en 3 simples pasos</p>
+                
+                <div class="space-y-3 mb-6">
+                    <a href="javascript:void(0)" onclick="simulateDownload('Android (Google Play)')" class="w-full bg-black text-white hover:bg-gray-800 p-3 rounded-2xl flex items-center justify-center gap-3 transition shadow">
+                        <i class="fa-brands fa-google-play text-2xl text-green-400"></i>
+                        <div class="text-left">
+                            <div class="text-[10px] uppercase tracking-wider text-gray-400">Disponible en</div>
+                            <div class="text-sm font-bold">Google Play Store</div>
+                        </div>
+                    </a>
+                    <a href="javascript:void(0)" onclick="simulateDownload('iOS (App Store)')" class="w-full bg-black text-white hover:bg-gray-800 p-3 rounded-2xl flex items-center justify-center gap-3 transition shadow">
+                        <i class="fa-brands fa-apple text-3xl text-white"></i>
+                        <div class="text-left">
+                            <div class="text-[10px] uppercase tracking-wider text-gray-400">Descargar para</div>
+                            <div class="text-sm font-bold">Apple App Store</div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="bg-brand-beige p-3 rounded-xl border border-brand-navy text-xs text-brand-navy">
+                    <i class="fa-solid fa-qrcode text-xl block mb-1 text-brand-terracotta"></i>
+                    Escaneá el código en el restaurante o solicitá tu usuario corporativo.
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- MODAL 2: PLATAFORMA DE GESTIÓN PARA EMPRESAS -->
+    <div id="platform-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-brand-cream border-4 border-brand-navy rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('platform-modal')" class="absolute top-4 right-4 text-brand-navy hover:text-brand-terracotta text-2xl font-bold">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fa-solid fa-laptop-code text-3xl text-brand-terracotta"></i>
+                    <div>
+                        <h3 class="text-xl font-black text-brand-navy uppercase">Portal Corporativo</h3>
+                        <p class="text-xs text-gray-600">Registro de Empresas y Nómina de Empleados</p>
+                    </div>
+                </div>
+
+                <!-- Tabs de simulación dentro del portal -->
+                <div class="flex border-b-2 border-brand-navy mb-4 text-xs font-bold uppercase">
+                    <button id="tab-empresa-btn" onclick="switchTab('empresa')" class="py-2 px-4 bg-brand-navy text-brand-cream rounded-t-lg">1. Registrar Empresa</button>
+                    <button id="tab-empleado-btn" onclick="switchTab('empleado')" class="py-2 px-4 bg-gray-200 text-gray-700 rounded-t-lg">2. Acceso Empleado</button>
+                </div>
+
+                <!-- Formulario Empresa -->
+                <form id="tab-empresa" onsubmit="handlePlatformDemo(event, 'Empresa')" class="space-y-3">
+                    <div>
+                        <label class="block text-[11px] font-bold text-brand-navy uppercase">Razón Social / Firma</label>
+                        <input type="text" required placeholder="Ej: Industria Textil Quilmes S.A." class="w-full px-3 py-2 text-xs rounded-lg border border-brand-navy">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[11px] font-bold text-brand-navy uppercase">CUIT</label>
+                            <input type="text" required placeholder="30-XXXXXXXX-X" class="w-full px-3 py-2 text-xs rounded-lg border border-brand-navy">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-brand-navy uppercase">Cantidad Empleados</label>
+                            <input type="number" required placeholder="Ej: 45" class="w-full px-3 py-2 text-xs rounded-lg border border-brand-navy">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-brand-navy uppercase">Persona de Contacto / RRHH</label>
+                        <input type="text" required placeholder="Nombre y Apellido" class="w-full px-3 py-2 text-xs rounded-lg border border-brand-navy">
+                    </div>
+                    <button type="submit" class="w-full bg-brand-terracotta hover:bg-brand-lightTerracotta text-white font-bold py-2.5 rounded-xl text-xs uppercase tracking-wider transition">
+                        Solicitar Alta de Empresa
+                    </button>
+                </form>
+
+                <!-- Formulario Empleado -->
+                <form id="tab-empleado" onsubmit="handlePlatformDemo(event, 'Empleado')" class="space-y-3 hidden">
+                    <div>
+                        <label class="block text-[11px] font-bold text-brand-navy uppercase">DNI Empleado</label>
+                        <input type="text" required placeholder="Ingresá tu DNI registrado" class="w-full px-3 py-2 text-xs rounded-lg border border-brand-navy">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-brand-navy uppercase">Código de Empresa</label>
+                        <input type="text" required placeholder="Ej: PARQUE-892" class="w-full px-3 py-2 text-xs rounded-lg border border-brand-navy">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-brand-navy uppercase">Lugar de Consumo Habitual</label>
+                        <select class="w-full px-3 py-2 text-xs rounded-lg border border-brand-navy bg-white">
+                            <option>Comedor Salón del Restaurante</option>
+                            <option>Vianda Entregada en Planta</option>
+                            <option>Retiro por Mostrador</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="w-full bg-brand-navy hover:bg-brand-terracotta text-brand-cream font-bold py-2.5 rounded-xl text-xs uppercase tracking-wider transition">
+                        Ingresar a Gestor de Comidas
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- NOTIFICACIÓN TIPO TOAST ALERTA PERSONALIZADA (Reemplazo de alert) -->
+    <div id="toast" class="fixed top-5 right-5 z-50 bg-brand-navy text-brand-cream border-2 border-brand-terracotta px-6 py-4 rounded-2xl shadow-2xl hidden flex items-center gap-3 max-w-sm transition-all transform translate-y-[-20px]">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-brand-terracotta text-2xl"></i>
+        <div>
+            <div id="toast-title" class="font-bold text-sm uppercase">Mensaje</div>
+            <div id="toast-body" class="text-xs text-gray-200">Operación realizada con éxito.</div>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT DE INTERACCIÓN -->
+    <script>
+        // 1. Lógica del Menú Mobile
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 2. Lógica del Carrusel
+        const slides = document.querySelectorAll('.carousel-item');
+        const dots = document.querySelectorAll('.carousel-dot');
+        let currentSlide = 0;
+        let slideInterval;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            dots.forEach((dot, i) => {
+                if (i === index) {
+                    dot.classList.add('bg-brand-terracotta', 'w-8');
+                    dot.classList.remove('bg-slate-600', 'w-3');
+                } else {
+                    dot.classList.remove('bg-brand-terracotta', 'w-8');
+                    dot.classList.add('bg-slate-600', 'w-3');
+                }
+            });
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            let next = (currentSlide + 1) % slides.length;
+            showSlide(next);
+        }
+
+        function prevSlide() {
+            let prev = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(prev);
+        }
+
+        document.getElementById('nextSlide').addEventListener('click', () => {
+            nextSlide();
+            resetTimer();
+        });
+
+        document.getElementById('prevSlide').addEventListener('click', () => {
+            prevSlide();
+            resetTimer();
+        });
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                showSlide(i);
+                resetTimer();
+            });
+        });
+
+        function startTimer() {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        function resetTimer() {
+            clearInterval(slideInterval);
+            startTimer();
+        }
+
+        // 3. Ventanas Modales
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function openContactModal(subject) {
+            const subjectSelect = document.getElementById('formSubject');
+            if (subjectSelect) {
+                subjectSelect.value = 'Viandas para Empresas';
+            }
+            const contactoSec = document.getElementById('contacto');
+            contactoSec.scrollIntoView({ behavior: 'smooth' });
+            showToast("Consulta de Plan", "Seleccionaste: " + subject + ". Completá el formulario.");
+        }
+
+        // 4. Tabs dentro del Portal Empresas
+        function switchTab(tab) {
+            const empresaForm = document.getElementById('tab-empresa');
+            const empleadoForm = document.getElementById('tab-empleado');
+            const empresaBtn = document.getElementById('tab-empresa-btn');
+            const empleadoBtn = document.getElementById('tab-empleado-btn');
+
+            if (tab === 'empresa') {
+                empresaForm.classList.remove('hidden');
+                empleadoForm.classList.add('hidden');
+                empresaBtn.className = "py-2 px-4 bg-brand-navy text-brand-cream rounded-t-lg font-bold";
+                empleadoBtn.className = "py-2 px-4 bg-gray-200 text-gray-700 rounded-t-lg font-bold";
+            } else {
+                empresaForm.classList.add('hidden');
+                empleadoForm.classList.remove('hidden');
+                empleadoBtn.className = "py-2 px-4 bg-brand-navy text-brand-cream rounded-t-lg font-bold";
+                empresaBtn.className = "py-2 px-4 bg-gray-200 text-gray-700 rounded-t-lg font-bold";
+            }
+        }
+
+        // 5. Toast / Notificación visual
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-body').innerText = message;
+            
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 4000);
+        }
+
+        // Handler Formularios
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            showToast("¡Mensaje Enviado!", "Gracias por contactarte con Restaurante del Parque. Te responderemos a la brevedad.");
+            e.target.reset();
+        }
+
+        function handlePlatformDemo(e, type) {
+            e.preventDefault();
+            closeModal('platform-modal');
+            showToast("Solicitud de " + type, "Recibimos la información. Un asesor comercial activará las credenciales de acceso.");
+            e.target.reset();
+        }
+
+        function simulateDownload(platform) {
+            closeModal('app-modal');
+            showToast("Descarga Iniciada", "Descargando la aplicación de Restaurante del Parque para " + platform + "...");
+        }
+
+        // Inicialización
+        window.onload = function() {
+            startTimer();
+        };
+    </script>
+</body>
+</html>
